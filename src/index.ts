@@ -82,13 +82,14 @@ class Storyblok {
 	 */
 	public constructor(config: ISbConfig, endpoint?: string) {
 		if (!endpoint) {
-			const region = config.region ? `-${config.region}` : ''
+			const region = config.region && config.region !== 'cn' ? `-${config.region}` : ''
+			const domain = config.region === 'cn' ? 'storyblokchina.cn' : 'storyblok.com'
 			const protocol = config.https === false ? 'http' : 'https'
 
 			if (!config.oauthToken) {
-				endpoint = `${protocol}://api${region}.storyblok.com/${'v2' as Version}`
+				endpoint = `${protocol}://api${region}.${domain}/${'v2' as Version}`
 			} else {
-				endpoint = `${protocol}://api${region}.storyblok.com/${'v1' as Version}`
+				endpoint = `${protocol}://api${region}.${domain}/${'v1' as Version}`
 			}
 		}
 
